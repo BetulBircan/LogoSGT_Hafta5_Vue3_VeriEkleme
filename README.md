@@ -51,11 +51,11 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 ## Proje Açıklaması:
-Bu projeyi sbadmin tasarımını vue.js ile componentlere ayırarak tasarlamak için yapıldı.
+Bu proje sbadmin tasarımını vue.js ile componentlere ayırarak tasarlamak için yapıldı ve "https://jsonplaceholder.typicode.com/comments" adresindeki commentlerin adı ve e mail adresini ekranda listelemek ve silmek için yapıldı.
 
--Önce `npm install -g @vue/cli` ile vue.js frameworkünü proje dosyamda kurdum. Daha sonra da `vue create dosya-adi` ile yeni bir dosya yarattım. Derlemek için de `npm run serve ` ile de derledim.
+- Önce `npm install -g @vue/cli` ile vue.js frameworkünü proje dosyamda kurdum. Daha sonra da `vue create dosya-adi` ile yeni bir dosya yarattım. Derlemek için de `npm run serve ` ile de derledim.
 
--Sbadmindeki bootstrap dosyalarını eklemek için public dosyasına sbadmindeki css, img, js, scss ve vendor dosyalarını ekledim. Public klasöründeki index.html dosyasına ile sbadmindeki blank.html de bulunan head kısmının aynısını kopyaladım ve de body bölümünde scripts kısımları aldım.
+- Sbadmindeki bootstrap dosyalarını eklemek için public dosyasına sbadmindeki css, img, js, scss ve vendor dosyalarını ekledim. Public klasöründeki index.html dosyasına ile sbadmindeki blank.html de bulunan head kısmının aynısını kopyaladım ve de body bölümünde scripts kısımları aldım.
 
 ```
 <head>
@@ -96,7 +96,7 @@ Bu projeyi sbadmin tasarımını vue.js ile componentlere ayırarak tasarlamak i
   </body>
 ```
 
--Daha sonra da Sidebar menüsü için src/component dosyasının içine sidebar klasörü oluşturup onun içine componentslere böldüm.
+- Daha sonra da Sidebar menüsü için src/component dosyasının içine sidebar klasörü oluşturup onun içine componentslere böldüm.
 
 ![sidebar](https://user-images.githubusercontent.com/86554799/156847196-c9e98625-207c-4443-a9b0-25867fd406bb.jpg)
 
@@ -104,9 +104,9 @@ Bu projeyi sbadmin tasarımını vue.js ile componentlere ayırarak tasarlamak i
 
 ![sidebar3](https://user-images.githubusercontent.com/86554799/156847543-a799da45-2111-4d72-842f-67148a493ecd.jpg)
 
--Kodları detaylı incelemek için src/components/SideBar/SidebarVue.vue ve diğer dosyalara bakabilirsiniz.
+- Kodları detaylı incelemek için src/components/SideBar/SidebarVue.vue ve diğer dosyalara bakabilirsiniz.
 
--Aynı şekilde sbadmindeki navbar menüsü için de src/component/NavBar klaörünün içerisine componentleri dosya olarak ekledim.
+- Aynı şekilde sbadmindeki navbar menüsü için de src/component/NavBar klaörünün içerisine componentleri dosya olarak ekledim.
 
 ![navbar](https://user-images.githubusercontent.com/86554799/156848379-b435213d-3fd2-4f83-a831-0083dec69051.jpg)
 
@@ -114,9 +114,9 @@ Bu projeyi sbadmin tasarımını vue.js ile componentlere ayırarak tasarlamak i
 
 ![navbar3](https://user-images.githubusercontent.com/86554799/156848568-607029d3-701f-46ab-8113-9045ceb471fd.jpg)
 
--Kodları detaylı incelemek için src/components/Navbar/NavBarVue.vue ve diğer dosyalara bakabilirsiniz.
+- Kodları detaylı incelemek için src/components/Navbar/NavBarVue.vue ve diğer dosyalara bakabilirsiniz.
 
--Daha sonra da PageContentdeki Blank yaısı için PageContent.Vue, Footer kısmı için de PageFooter.vue ve en sonunda LogoutModal comğonentlerini oluşturdum ve vue.js in ana componeti olan App.vue ya ekledim.
+- Daha sonra da PageContentdeki Blank yaısı için PageContent.Vue, Footer kısmı için de PageFooter.vue ve en sonunda LogoutModal comğonentlerini oluşturdum ve vue.js in ana componeti olan App.vue ya ekledim.
 
 ![footer](https://user-images.githubusercontent.com/86554799/156849826-f9074d62-ebea-4ca1-aaf4-6d45d0d5623c.jpg)
 
@@ -187,8 +187,111 @@ export default {
 
 **Son Hali**
 
-![sbadmin tasarım](https://user-images.githubusercontent.com/86554799/156849877-7d983f61-9a07-4759-86a1-cbcbe725d7ed.jpg)
+![sbadmin tasarım](https://user-imavges.githubusercontent.com/86554799/156849877-7d983f61-9a07-4759-86a1-cbcbe725d7ed.jpg)
 
+- Sbadmin tasarımını componentlere ayırdıktan sonra, sayfa yüklendiğinde "https://jsonplaceholder.typicode.com/comments" adresinden aldığım commentleri listelemek ve silmek için;
+- PageContent.Vue componentinin içerisine bir sütunda verileri listeleyen ve bir veriyi sildiğim zaman silinen verileri diğer sütunda gösteren html kodlarını yazdım.
+
+**PageContent.vue**
+
+```
+<template>
+    <div  class="container-fluid">
+       <div class="row"> 
+            <div class="col-md-6">
+              <div v-for="item in todoData" :key="item.id">
+                <div class="col-md-11" v-on:click="showAlert(item.id)">
+                  <div v-if="!item.completed">
+                    <div class="alert alert-success" role="alert">
+                      Adı: {{ item.name}}
+                      <br>
+                      E-mail: {{ item.email}}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1">
+                  <button class="btn btn-danger" v-on:click="removeTodo(item.id)">Sil</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div v-for="item in todoData2" :key="item.id">
+                <div class="col-md-11" v-on:click="showAlert2(item.id)">
+                  
+                  <div v-if="!item.completed">
+                    <div class="alert alert-danger" role="alert">
+                      Adı: {{ item.name}}
+                      <br>
+                      E-mail: {{ item.email}}
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-1">
+                  <button class="btn btn-danger" v-on:click="removeTodo2(item.id)">Sil</button>
+                </div>
+              </div>
+            </div>
+            <!-- /.container-fluid -->
+          </div>
+    </div>
+</template>
+```
+- Sonrasında bu verileri ekleyecek ve silecek javascript kodlarını ekledim.
+
+```
+<script>
+export default {
+    name:"PageContent",
+    data: function() {
+        return {
+            todoData: [],
+            todoData2: [],
+        };
+    },
+    methods: {
+            showAlert(id) {
+                var item = this.todoData.find(x => x.id == id);
+                item.completed = !item.completed;
+            },
+            showAlert2(id) {
+                var item = this.todoData2.find(x => x.id == id);
+                item.completed = !item.completed;
+            },
+            removeTodo(id) {
+                var add = this.todoData.find(x => x.id == id);
+                this.todoData2.unshift(add);
+                var filtered = this.todoData.filter(x => x.id != id);
+                //this.todoData2.push(todoData.pop(id));
+                this.todoData = filtered;
+                console.log(this.todoData);
+
+            },
+            removeTodo2(id) {
+                var add2 = this.todoData2.find(x => x.id == id);
+                this.todoData.push(add2);
+                var filtered2 = this.todoData2.filter(x => x.id != id);
+                //this.todoData.push(todoData2.pop(id));
+                this.todoData2 = filtered2;
+                console.log(this.todoData2);
+            }
+        },
+        created() {
+            fetch("https://jsonplaceholder.typicode.com/comments")
+                .then((res) => {
+                    return res.json()
+                })
+                .then((jsonResponse) => {
+                    this.todoData = jsonResponse;
+                    console.log(jsonResponse);
+                })
+        }
+}
+</script>
+```
+
+**Sonucu**
+
+![sb_admin](https://user-images.githubusercontent.com/86554799/158688237-32d4a326-8795-48ed-8f84-f87288a8fbba.gif)
 
 
 
