@@ -187,7 +187,9 @@ export default {
 
 **Son Hali**
 
-![sbadmin tasarım](https://user-imavges.githubusercontent.com/86554799/156849877-7d983f61-9a07-4759-86a1-cbcbe725d7ed.jpg)
+
+![sbadmin tasarım](https://user-images.githubusercontent.com/86554799/158691853-90cf7b2e-c293-4468-8b8c-dc1d923e3f17.jpg)
+
 
 - Sbadmin tasarımını componentlere ayırdıktan sonra, sayfa yüklendiğinde "https://jsonplaceholder.typicode.com/comments" adresinden aldığım commentleri listelemek ve silmek için;
 - PageContent.Vue componentinin içerisine bir sütunda verileri listeleyen ve bir veriyi sildiğim zaman silinen verileri diğer sütunda gösteren html kodlarını yazdım.
