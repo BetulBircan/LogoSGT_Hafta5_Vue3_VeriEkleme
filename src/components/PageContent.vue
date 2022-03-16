@@ -41,7 +41,50 @@
 
 <script>
 export default {
-    name:"PageContent"
+    name:"PageContent",
+    data: function() {
+        return {
+            todoData: [],
+            todoData2: [],
+        };
+    },
+    methods: {
+            showAlert(id) {
+                var item = this.todoData.find(x => x.id == id);
+                item.completed = !item.completed;
+            },
+            showAlert2(id) {
+                var item = this.todoData2.find(x => x.id == id);
+                item.completed = !item.completed;
+            },
+            removeTodo(id) {
+                var add = this.todoData.find(x => x.id == id);
+                this.todoData2.unshift(add);
+                var filtered = this.todoData.filter(x => x.id != id);
+                //this.todoData2.push(todoData.pop(id));
+                this.todoData = filtered;
+                console.log(this.todoData);
+
+            },
+            removeTodo2(id) {
+                var add2 = this.todoData2.find(x => x.id == id);
+                this.todoData.push(add2);
+                var filtered2 = this.todoData2.filter(x => x.id != id);
+                //this.todoData.push(todoData2.pop(id));
+                this.todoData2 = filtered2;
+                console.log(this.todoData2);
+            }
+        },
+        created() {
+            fetch("https://jsonplaceholder.typicode.com/comments")
+                .then((res) => {
+                    return res.json()
+                })
+                .then((jsonResponse) => {
+                    this.todoData = jsonResponse;
+                    console.log(jsonResponse);
+                })
+        }
 }
 </script>
 
